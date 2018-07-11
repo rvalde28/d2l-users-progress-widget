@@ -19,7 +19,7 @@
 
 <style>
     .awards-component-badge{
-        padding:20px;
+        padding: 12px 16px;
     }
     img{
         display:block;
@@ -32,7 +32,8 @@
 
 
     .awards-criteria{
-        padding:20px;
+        padding: 0 16px;
         font-size: 14px;
+        text-align:center;
     }
 </style>

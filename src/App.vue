@@ -6,7 +6,7 @@
       <div class="user-navigation-option" id="progress" v-on:click="progressClick">Progress</div>
     </div>
 
-    <div class="search-box-container"><input type="text" placeholder="Search..."></div>
+    <div class="search-box-container"><input type="text" v-model="searchItem" placeholder="Search..."></div>
     <information-modal
             class="award-information-modal"
             v-bind:item="modalItem"
@@ -33,12 +33,13 @@
               v-bind:item="item"
               v-bind:course="key"></progress-component>
 
-      <div class="user-progress-stat-box">
-        Total Points:
+      <div class="user-progress-stat-box" v-if="isAwards">
+        Total Points: {{totalPoints}}
+      </div>
+      <div class="user-progress-stat-box" v-if="isProgress">
+        Total time: {{totalTime}}
       </div>
     </div>
-
-
   </div>
 </template>
 
@@ -60,7 +61,10 @@ export default {
       isModal: false,
       modalItem: '',
       modalTime: '',
-      modalTitle: ''
+      modalTitle: '',
+      searchItem: '',
+      totalPoints: '',
+      totalTime: 0,
     }
   },
   components: {
@@ -88,6 +92,8 @@ export default {
       if(document.getElementsByClassName('display-awards').length >= 1){
         document.getElementsByClassName('user-progress-content')[0].classList.remove('display-awards');
       }
+
+
     },
     imageClick(key, item){
       this.isModal = true;
@@ -118,12 +124,41 @@ export default {
       .then(
         response => {
           this.list = response.data;
+          Object.keys(this.list).forEach(key => {
+            if(this.list[key].award != undefined){
+              this.totalPoints += Number(this.list[key].award.Credit);
+            }
+
+            if(this.list[key].is_completed == true){
+              this.totalTime += Number(this.list[key].time_spent);
+            }
+
+          });
+
+          console.log(this.awardsList);
         });
 
     this.isAwards = true;
     document.getElementById('awards').classList.add('active-button');
     document.getElementsByClassName('user-progress-content')[0].classList.add('display-awards');
+
+
   },
+  computed:{
+   itemFilter(){
+      let self = this;
+
+      return this.list
+        .filter(function (c) {
+          let searchTemp = self.searchItem;
+          searchTemp = searchTemp.replace(/\s/g,'');
+          let tempCourse = c.award.Criteria;
+          tempCourse = tempCourse.replace(/\s/g,'');
+
+          return tempCourse.toLowerCase().indexOf(searchTemp.toLowerCase()) >= 0;
+        })
+    }
+  }
 }
 </script>
 
@@ -151,12 +186,12 @@ export default {
     display: flex;
     width: 100%;
     background:white;
-    height: 5vh;
+    height: 6vh;
     top:0;
   }
 
   .search-box-container{
-    height:5vh;
+    height:8vh;
     padding:0 16px;
     box-shadow: 0 2px 4px 0 rgba(0,0,0,.4);
   }
@@ -181,9 +216,9 @@ export default {
     width:100%;
     display: flex;
     background-color: #FF9900;
+    box-shadow: 0 2px 4px 0 rgba(0,0,0,.4);
+    max-height: 80vh;
   }
-
-
 
   .display-awards{
     display: grid;
@@ -193,13 +228,15 @@ export default {
   .user-progress-content{
     width: 100%;
     height: calc(100vh - 10vh);
-    overflow-y:auto;
+    overflow-y: auto;
   }
 
   .progress-component{
     display: flex;
-    border: 1px solid black;
+  }
 
+  .progress-component:hover{
+    box-shadow: 0 0 4px 0 #EE9E2B;
   }
 
   .user-progress-stat-box{
@@ -207,7 +244,8 @@ export default {
     bottom: 0;
     left:0;
     padding: 8px 20px 8px 20px;
-    background-color:white;
+    background-color: #4EAD4F;
+    color: white;
   }
   .awards-component{
 
@@ -216,9 +254,4 @@ export default {
   .awards-component:hover{
     box-shadow: 0 0 4px 0 #EE9E2B;
   }
-
-
-
-
-
 </style>

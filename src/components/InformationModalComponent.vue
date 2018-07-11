@@ -6,10 +6,19 @@
         </div>
         <div class="stats-container">
             <div class="information-modal-stat  title">Award for {{title}}</div>
-            <div class="information-modal-stat">Criteria: {{item.award.Criteria}}</div>
-            <div class="information-modal-stat">Evidence: {{item.award.Evidence}}</div>
-            <div class="information-modal-stat">Credits: {{item.award.Credit}}</div>
-            <div class="information-modal-stat">Time Spent: {{time}}</div>
+            <div class="information-modal-stat">
+                <span>Criteria:</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <span>{{item.award.Criteria}}</span>
+            </div>
+            <div class="information-modal-stat">
+                <span>Evidence:</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <span>{{item.award.Evidence}}</span>
+            </div>
+            <div class="information-modal-stat">
+                <span>Credits:</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <span>{{item.award.Credit}}</span>
+            </div>
+            <div class="information-modal-stat">Time Spent: &nbsp;&nbsp;&nbsp; {{time}}</div>
         </div>
     </div>
 </template>
@@ -38,10 +47,16 @@
         top: 0;
         bottom: 0;
         margin: auto;
+        right:0;
+        left: 0;
+
     }
 
+    img{
+        max-height: 100%;
+    }
     .title{
-        font-size: 1.4rem;
+        font-size: 1.7rem;
     }
     .close-information-modal-component{
         position: absolute;
@@ -52,12 +67,15 @@
     }
     .information-modal-badge-container{
         min-width: 30%;
+        max-width: 30%;
         position: relative;
     }
 
     .information-modal-stat{
+        display: flex;
         width: 100%;
         color: white;
+        margin-bottom: 6px;
     }
     .stats-container {
         padding: 16px;
