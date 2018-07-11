@@ -5,7 +5,7 @@
             <div class="progress-component-time-spent">{{item.time_spent}}</div>
         </div>
 
-        <div class="progress-component-badge-container"><img src="../assets/images.jpg"> </div>
+        <div class="progress-component-badge-container"><img src="../assets/logo.png"> </div>
     </div>
 </template>
 

@@ -10,6 +10,9 @@
     <information-modal
             class="award-information-modal"
             v-bind:item="modalItem"
+            v-bind:title="modalTitle"
+            v-bind:time="modalTime"
+            v-on:closeModal="closeModal"
             v-if="isAwards && isModal"></information-modal>
 
     <div class="user-progress-content">
@@ -17,10 +20,10 @@
       <awards-component
               class="awards-component"
               v-if="isAwards && item.award"
-              v-for="item in list"
+              v-for="(item,key) in list"
               :key="item.id"
               v-bind:item="item"
-              v-on:imageClicked="imageClick"></awards-component>
+              v-on:imageClicked="imageClick(key,item)"></awards-component>
 
       <progress-component
               class="progress-component"
@@ -55,7 +58,9 @@ export default {
       awardsList: [],
       progressList: [],
       isModal: false,
-      modalItem: ''
+      modalItem: '',
+      modalTime: '',
+      modalTitle: ''
     }
   },
   components: {
@@ -84,10 +89,29 @@ export default {
         document.getElementsByClassName('user-progress-content')[0].classList.remove('display-awards');
       }
     },
-    imageClick(item){
+    imageClick(key, item){
       this.isModal = true;
+
       this.modalItem = item;
+      this.modalTitle = key;
+
+      let hours = Math.floor(item.time_spent/3600);
+
+      let minutes = Math.floor((item.time_spent-(3600*hours))/60);
+
+      if(hours < 10 && minutes < 10){
+        this.modalTime = '0'+hours+':'+'0'+minutes;
+      }
+      else if(hours < 10 && minutes > 10){
+        this.modalTime = '0'+hours+':'+minutes;
+      }
+      else {
+        this.modalTime = hours+':'+minutes;
+      }
     },
+    closeModal(){
+      this.isModal = false;
+    }
   },
   mounted() {
     axios.get('http://localhost:8000/api/json')
@@ -144,19 +168,22 @@ export default {
   }
   .user-navigation-option:hover{
     transition: all .4s ease-in-out;
-    background-color: #2B57EE;
+    background-color: #2196F5;
     color:white;
   }
 
   .active-button{
-    background-color: #2B57EE;
+    background-color: #2196F5;
     color:white;
   }
 
   .award-information-modal{
     width:100%;
-
+    display: flex;
+    background-color: #FF9900;
   }
+
+
 
   .display-awards{
     display: grid;
@@ -187,8 +214,10 @@ export default {
   }
 
   .awards-component:hover{
-    box-shadow: 0 0 4px 0 rgba(0,0,0,.4);
+    box-shadow: 0 0 4px 0 #EE9E2B;
   }
+
+
 
 
 

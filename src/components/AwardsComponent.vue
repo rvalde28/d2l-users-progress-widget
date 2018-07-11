@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="awards-component-badge"><img v-on:click="triggerModal" class="awards-image" src="../assets/images.jpg"></div>
+        <div class="awards-component-badge" v-on:click="triggerModal"><img  class="awards-image" src="../assets/logo.png"></div>
         <div class="awards-criteria">{{item.award.Criteria}}</div>
     </div>
 </template>
@@ -19,7 +19,6 @@
 
 <style>
     .awards-component-badge{
-
         padding:20px;
     }
     img{
@@ -28,6 +27,7 @@
         margin-left: auto;
         margin-right: auto;
         width:auto;
+
     }
 
 
