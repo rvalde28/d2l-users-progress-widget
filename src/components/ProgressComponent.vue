@@ -1,17 +1,18 @@
 <template>
     <div>
         <div class="information-container">
-            <div class="progress-component-course-title">Course</div>
-            <div class="progress-component-time-spent">Time Spent</div>
+            <div class="progress-component-course-title">{{course}}</div>
+            <div class="progress-component-time-spent">{{item.time_spent}}</div>
         </div>
 
-        <div class="progress-component-badge-container"> Image</div>
+        <div class="progress-component-badge-container"><img src="../assets/images.jpg"> </div>
     </div>
 </template>
 
 <script>
   export default {
-
+    name:'ProgressComponent',
+    props:['item','course']
   }
 </script>
 

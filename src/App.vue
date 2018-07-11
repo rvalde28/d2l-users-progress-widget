@@ -6,20 +6,29 @@
       <div class="user-navigation-option" id="progress" v-on:click="progressClick">Progress</div>
     </div>
 
+    <div class="search-box-container"><input type="text" placeholder="Search..."></div>
+    <information-modal
+            class="award-information-modal"
+            v-bind:item="modalItem"
+            v-if="isAwards && isModal"></information-modal>
+
     <div class="user-progress-content">
+
       <awards-component
               class="awards-component"
-              v-if="isAwards"
+              v-if="isAwards && item.award"
               v-for="item in list"
               :key="item.id"
-              v-bind:item="item"></awards-component>
+              v-bind:item="item"
+              v-on:imageClicked="imageClick"></awards-component>
 
       <progress-component
               class="progress-component"
-              v-if="isProgress"
-              v-for="item in list"
+              v-for="(item,key) in list"
+              v-if="isProgress && (item.is_complete === true)"
               :key="item.id"
-              v-bind:item="item"></progress-component>
+              v-bind:item="item"
+              v-bind:course="key"></progress-component>
 
       <div class="user-progress-stat-box">
         Total Points:
@@ -33,6 +42,8 @@
 <script>
 import AwardsComponent from './components/AwardsComponent';
 import ProgressComponent from './components/ProgressComponent';
+import InformationModal from './components/InformationModalComponent'
+import axios from 'axios';
 
 export default {
   name: 'app',
@@ -40,12 +51,17 @@ export default {
     return{
       isAwards: false,
       isProgress: false,
-      list: [1,2,3,4]
+      list: [],
+      awardsList: [],
+      progressList: [],
+      isModal: false,
+      modalItem: ''
     }
   },
   components: {
     AwardsComponent,
-    ProgressComponent
+    ProgressComponent,
+    InformationModal,
   },
   methods:{
     awardsClick(){
@@ -60,6 +76,7 @@ export default {
     progressClick(){
       this.isProgress = true;
       this.isAwards = false;
+      this.isModal = false;
       document.getElementById('awards').classList.remove('active-button');
       document.getElementById('progress').classList.add('active-button');
 
@@ -67,28 +84,63 @@ export default {
         document.getElementsByClassName('user-progress-content')[0].classList.remove('display-awards');
       }
     },
+    imageClick(item){
+      this.isModal = true;
+      this.modalItem = item;
+    },
+  },
+  mounted() {
+    axios.get('http://localhost:8000/api/json')
+      .then(
+        response => {
+          this.list = response.data;
+        });
 
-  }
+    this.isAwards = true;
+    document.getElementById('awards').classList.add('active-button');
+    document.getElementsByClassName('user-progress-content')[0].classList.add('display-awards');
+  },
 }
 </script>
 
 <style>
+  body{
+    margin:0;
+  }
+
+  input{
+    width: 100%;
+    height: 5vh;
+    outline: none;
+    border: none;
+    padding:0;
+    font-size:14px;
+  }
+
   #app {
-    font-family: 'Avenir', Helvetica, Arial, sans-serif;
+    font-family: Lato,'Lucida Sans Unicode','Lucida Grande',sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    text-align: center;
-    color: #2c3e50;
   }
 
   .user-progress-navigation{
     display: flex;
+    width: 100%;
+    background:white;
+    height: 5vh;
+    top:0;
+  }
+
+  .search-box-container{
+    height:5vh;
+    padding:0 16px;
+    box-shadow: 0 2px 4px 0 rgba(0,0,0,.4);
   }
 
   .user-navigation-option{
     width: 50%;
-    padding: 10px;
-
+    padding-top: 6px;
+    text-align: center;
   }
   .user-navigation-option:hover{
     transition: all .4s ease-in-out;
@@ -101,34 +153,41 @@ export default {
     color:white;
   }
 
+  .award-information-modal{
+    width:100%;
+
+  }
 
   .display-awards{
     display: grid;
     grid-template-columns: 33.33% 33.33% 33.33%;
   }
 
-
-
   .user-progress-content{
     width: 100%;
-
+    height: calc(100vh - 10vh);
+    overflow-y:auto;
   }
-
 
   .progress-component{
     display: flex;
     border: 1px solid black;
+
   }
 
   .user-progress-stat-box{
-    position:absolute;
+    position:fixed;
     bottom: 0;
     left:0;
-    padding: 20px;
+    padding: 8px 20px 8px 20px;
+    background-color:white;
   }
   .awards-component{
 
+  }
 
+  .awards-component:hover{
+    box-shadow: 0 0 4px 0 rgba(0,0,0,.4);
   }
 
 

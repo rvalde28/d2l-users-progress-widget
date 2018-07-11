@@ -1,26 +1,38 @@
 <template>
     <div>
-        <div class="awards-component-badge"> asdfsdf</div>
-        <div class="awards-criteria">This is example</div>
+        <div class="awards-component-badge"><img v-on:click="triggerModal" class="awards-image" src="../assets/images.jpg"></div>
+        <div class="awards-criteria">{{item.award.Criteria}}</div>
     </div>
 </template>
 
 <script>
   export default {
-    name: 'HelloWorld',
-    props: {
-
+    name: 'AwardsComponent',
+    props: ['item'],
+    methods:{
+      triggerModal(){
+        this.$emit('imageClicked', this.item)
+      }
     }
   }
 </script>
 
 <style>
     .awards-component-badge{
-        background-color: red;
-        height:auto;
+
         padding:20px;
     }
+    img{
+        display:block;
+        max-width: 100%;
+        margin-left: auto;
+        margin-right: auto;
+        width:auto;
+    }
+
+
     .awards-criteria{
         padding:20px;
+        font-size: 14px;
     }
 </style>
