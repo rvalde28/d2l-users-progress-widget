@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="awards-component-badge" v-on:click="triggerModal"><img  class="awards-image" src="../assets/logo.png"></div>
-        <div class="awards-criteria">{{item.award.Criteria}}</div>
+        <div class="awards-criteria" v-on:click="triggerModal">{{item.award.Criteria}}</div>
     </div>
 </template>
 
@@ -27,8 +27,6 @@
         margin-left: auto;
         margin-right: auto;
         width:auto;
-        cursor: pointer;
-
     }
 
     .awards-criteria{
@@ -42,8 +40,4 @@
         -webkit-box-orient: vertical;
     }
 
-    .awards-criteria:hover{
-        overflow: visible;
-        display:block;
-    }
 </style>

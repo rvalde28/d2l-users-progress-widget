@@ -23,6 +23,7 @@
               v-for="(item,key) in list"
               :key="item.id"
               v-bind:item="item"
+
               v-on:imageClicked="imageClick(key,item)"></awards-component>
 
       <progress-component
@@ -114,6 +115,8 @@ export default {
       else {
         this.modalTime = hours+':'+minutes;
       }
+
+
     },
     closeModal(){
       this.isModal = false;
@@ -138,7 +141,6 @@ export default {
 
           });
 
-          console.log(this.totalTime);
 
           let hours = Math.floor(Number(this.totalTime)/3600);
           let minutes = Math.floor((this.totalTime-(3600*hours))/60);
@@ -170,6 +172,24 @@ export default {
 
     let colorArray = [redColor, blueColor, yellowColor];
 
+    let imageContainers = document.getElementsByClassName('.awards-component-badge');
+    for(let i = 0; i < imageContainers.length; i++){
+
+      imageContainers[i].style.backgroundColor = colorArray[i%imageContainers.length];
+    }
+  },
+  updated(){
+    let redColor = '#F34334';
+    let blueColor = '#2196F5';
+    let yellowColor = '#FF9900';
+
+    let colorArray = [redColor, blueColor, yellowColor];
+
+    let imageContainers = document.getElementsByClassName('.awards-component-badge');
+    for(let i = 0; i < imageContainers.length; i++){
+
+      imageContainers[i].style.backgroundColor = colorArray[i%imageContainers.length];
+    }
   },
   computed:{
 
@@ -196,6 +216,7 @@ export default {
 <style>
   body{
     margin:0;
+    cursor: default;
   }
 
   input{
@@ -222,15 +243,16 @@ export default {
   }
 
   .search-box-container{
-    height:8vh;
+    height:5vh;
     padding:0 16px;
     box-shadow: 0 2px 4px 0 rgba(0,0,0,.4);
   }
 
   .user-navigation-option{
     width: 50%;
-    padding-top: 6px;
+    padding-top: 10px;
     text-align: center;
+    cursor: pointer;
   }
   .user-navigation-option:hover{
     transition: all .4s ease-in-out;
@@ -258,7 +280,7 @@ export default {
 
   .user-progress-content{
     width: 100%;
-    height: calc(100vh - 14vh);
+    height: calc(100vh - 11vh);
     overflow-y: auto;
   }
 
@@ -279,10 +301,14 @@ export default {
     color: white;
   }
   .awards-component{
-
+    cursor: pointer;
   }
 
   .awards-component:hover{
     box-shadow: 0 0 4px 0 #EE9E2B;
+  }
+  .awards-component:hover .awards-criteria {
+    overflow: visible;
+    display:block;
   }
 </style>

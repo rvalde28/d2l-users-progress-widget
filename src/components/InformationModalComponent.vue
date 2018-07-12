@@ -34,7 +34,31 @@
     methods:{
       closeModal(){
         this.$emit('closeModal');
+        document.getElementsByClassName('user-progress-content')[0].style.height = '';
+      },
+      updateSize(){
+        if(document.getElementsByClassName('award-information-modal')){
+          let modalHeight = document.getElementsByClassName('award-information-modal')[0].offsetHeight;
+          let contentHeight = document.getElementsByClassName('user-progress-content')[0].clientHeight;
+          let buttonSize = document.getElementsByClassName('user-progress-navigation')[0].clientHeight;
+          let searchSize = document.getElementsByClassName('search-box-container')[0].clientHeight;
+          let windowSize = window.innerHeight;
+
+          let maxHeight = windowSize - (buttonSize + searchSize + modalHeight);
+
+          console.log(modalHeight);
+          console.log(contentHeight);
+          document.getElementsByClassName('user-progress-content')[0].style.height = maxHeight + 'px';
+        }
       }
+    },
+    updated(){
+      this.$nextTick(function () {
+        this.updateSize();
+      })
+    },
+    mounted(){
+      this.updateSize();
     }
 
   }
@@ -64,6 +88,7 @@
         background: white;
         width: 20px;
         text-align: center;
+        cursor: pointer;
     }
     .information-modal-badge-container{
         min-width: 30%;

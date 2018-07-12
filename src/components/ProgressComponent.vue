@@ -29,6 +29,9 @@
       else if(hours < 10 && minutes > 10){
         this.time = '0'+hours+':'+minutes;
       }
+      else if(hours > 10 && minutes < 10){
+        this.time = hours+':0'+minutes;
+      }
       else {
         this.time = hours+':'+minutes;
   }
