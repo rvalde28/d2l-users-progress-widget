@@ -20,15 +20,14 @@
       <awards-component
               class="awards-component"
               v-if="isAwards && item.award"
-              v-for="(item,key) in list"
+              v-for="(item,key) in itemFilter"
               :key="item.id"
               v-bind:item="item"
-
               v-on:imageClicked="imageClick(key,item)"></awards-component>
 
       <progress-component
               class="progress-component"
-              v-for="(item,key) in list"
+              v-for="(item,key) in itemFilter"
               v-if="isProgress && (item.is_complete === true)"
               :key="item.id"
               v-bind:item="item"
@@ -57,7 +56,7 @@ export default {
       isAwards: false,
       isProgress: false,
       list: [],
-      awardsList: [],
+      awardsList: [1,1,1,1,1,1,1],
       progressList: [],
       isModal: false,
       modalItem: '',
@@ -93,7 +92,7 @@ export default {
       if(document.getElementsByClassName('display-awards').length >= 1){
         document.getElementsByClassName('user-progress-content')[0].classList.remove('display-awards');
       }
-
+      document.getElementsByClassName('user-progress-content')[0].style.height = '';
 
     },
     imageClick(key, item){
@@ -195,17 +194,33 @@ export default {
 
 
    itemFilter(){
-      let self = this;
+     let list = [];
+     let returnItem = {
 
-      return this.list
-        .filter(function (c) {
-          let searchTemp = self.searchItem;
-          searchTemp = searchTemp.replace(/\s/g,'');
-          let tempCourse = c.award.Criteria;
-          tempCourse = tempCourse.replace(/\s/g,'');
+     };
 
-          return tempCourse.toLowerCase().indexOf(searchTemp.toLowerCase()) >= 0;
-        })
+     Object.keys(this.list).forEach(key =>{
+       let searchTemp = this.searchItem;
+
+       searchTemp = searchTemp.replace(/\s/g,'').toLowerCase();
+
+       let tempCourse = key;
+
+       tempCourse = tempCourse.replace(/\s/g,'').toLowerCase();
+       console.log(tempCourse.includes(searchTemp));
+       console.log(tempCourse);
+
+
+
+       if(tempCourse.includes(searchTemp)){
+         returnItem[key] = this.list[key];
+       }
+     });
+
+     list.push(returnItem);
+     console.log(list.length);
+
+     return returnItem;
     }
 
 
