@@ -27,13 +27,23 @@
         margin-left: auto;
         margin-right: auto;
         width:auto;
+        cursor: pointer;
 
     }
-
 
     .awards-criteria{
         padding: 0 16px;
         font-size: 14px;
         text-align:center;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+    }
+
+    .awards-criteria:hover{
+        overflow: visible;
+        display:block;
     }
 </style>

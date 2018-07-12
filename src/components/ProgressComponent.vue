@@ -47,6 +47,7 @@
         width: 80%;
         padding: 8px;
         font-size: 1.3rem;
+        color: #FF9900;
     }
 
     .progress-component-time-spent{

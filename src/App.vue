@@ -63,7 +63,7 @@ export default {
       modalTime: '',
       modalTitle: '',
       searchItem: '',
-      totalPoints: '',
+      totalPoints: 0,
       totalTime: 0,
     }
   },
@@ -127,15 +127,36 @@ export default {
           Object.keys(this.list).forEach(key => {
             if(this.list[key].award != undefined){
               this.totalPoints += Number(this.list[key].award.Credit);
+
             }
 
-            if(this.list[key].is_completed == true){
+            if(this.list[key].is_complete === true){
               this.totalTime += Number(this.list[key].time_spent);
             }
 
+
+
           });
 
-          console.log(this.awardsList);
+          console.log(this.totalTime);
+
+          let hours = Math.floor(Number(this.totalTime)/3600);
+          let minutes = Math.floor((this.totalTime-(3600*hours))/60);
+
+          if(hours < 10 && minutes < 10){
+            this.totalTime = '0'+hours+':'+'0'+minutes;
+          }
+          else if(hours < 10 && minutes > 10){
+            this.totalTime = '0'+hours+':'+minutes;
+          }
+          else if(hours > 10 && minutes < 10){
+            this.totalTime = hours+':0'+minutes;
+          }
+          else {
+            this.totalTime = hours+':'+minutes;
+          }
+
+
         });
 
     this.isAwards = true;
@@ -143,8 +164,16 @@ export default {
     document.getElementsByClassName('user-progress-content')[0].classList.add('display-awards');
 
 
+    let redColor = '#F34334';
+    let blueColor = '#2196F5';
+    let yellowColor = '#FF9900';
+
+    let colorArray = [redColor, blueColor, yellowColor];
+
   },
   computed:{
+
+
    itemFilter(){
       let self = this;
 
@@ -158,6 +187,8 @@ export default {
           return tempCourse.toLowerCase().indexOf(searchTemp.toLowerCase()) >= 0;
         })
     }
+
+
   }
 }
 </script>
@@ -227,7 +258,7 @@ export default {
 
   .user-progress-content{
     width: 100%;
-    height: calc(100vh - 10vh);
+    height: calc(100vh - 14vh);
     overflow-y: auto;
   }
 
