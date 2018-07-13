@@ -49,19 +49,20 @@
         float: left;
         width: 80%;
         padding: 8px;
-        font-size: 1.3rem;
-        color: #FF9900;
+        font-size: 18px;
     }
 
     .progress-component-time-spent{
         float: left;
-        width: 80%;
+
         padding: 8px;
+        font-size: 14px;
     }
 
     .progress-component-badge-container{
         float: right;
-        width: 20%;
-        padding: 20px;
+        min-width: 17%;
+        max-width: 17%;
+        padding: 12px 16px;
     }
 </style>

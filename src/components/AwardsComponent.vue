@@ -1,7 +1,8 @@
 <template>
     <div>
         <div class="awards-component-badge" v-on:click="triggerModal"><img  class="awards-image" src="../assets/logo.png"></div>
-        <div class="awards-criteria" v-on:click="triggerModal">{{item.award.Criteria}}</div>
+        <div class="awards-criteria" v-on:click="triggerModal"><p>{{item.award.Criteria}}</p></div>
+        <div class="award-credit">(Credit: {{item.award.Credit}})</div>
     </div>
 </template>
 
@@ -19,6 +20,8 @@
 
 <style>
     .awards-component-badge{
+        min-width: 17%;
+        max-width: 17%;
         padding: 12px 16px;
     }
     img{
@@ -30,14 +33,24 @@
     }
 
     .awards-criteria{
-        padding: 0 16px;
+        width: 70%;
+        padding: 12px 16px;
         font-size: 14px;
-        text-align:center;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        display: -webkit-box;
-        -webkit-line-clamp: 2;
-        -webkit-box-orient: vertical;
+
     }
 
+    p{
+        display: table-cell;
+        vertical-align: middle;
+        height: calc(15vh - 32px);
+    }
+
+    .award-credit{
+        position: absolute;
+        right: 0;
+        bottom:0;
+        font-style: italic;
+        padding-right: 16px;
+        font-size: 14px;
+    }
 </style>

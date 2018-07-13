@@ -81,12 +81,21 @@
     }
     .close-information-modal-component{
         position: absolute;
-        right:0;
-        background: white;
-        width: 20px;
+        top: 0;
+        right: 0;
+
+        /*background: black;*/
+        padding: 8px;
+        color: white;
         text-align: center;
         cursor: pointer;
+        overflow:hidden;
     }
+
+    .close-information-modal-component:hover{
+        background-color: #ff6639;
+    }
+
     .information-modal-badge-container{
         min-width: 30%;
         max-width: 30%;

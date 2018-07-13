@@ -165,30 +165,10 @@ export default {
     document.getElementsByClassName('user-progress-content')[0].classList.add('display-awards');
 
 
-    let redColor = '#F34334';
-    let blueColor = '#2196F5';
-    let yellowColor = '#FF9900';
 
-    let colorArray = [redColor, blueColor, yellowColor];
-
-    let imageContainers = document.getElementsByClassName('.awards-component-badge');
-    for(let i = 0; i < imageContainers.length; i++){
-
-      imageContainers[i].style.backgroundColor = colorArray[i%imageContainers.length];
-    }
   },
   updated(){
-    let redColor = '#F34334';
-    let blueColor = '#2196F5';
-    let yellowColor = '#FF9900';
 
-    let colorArray = [redColor, blueColor, yellowColor];
-
-    let imageContainers = document.getElementsByClassName('.awards-component-badge');
-    for(let i = 0; i < imageContainers.length; i++){
-
-      imageContainers[i].style.backgroundColor = colorArray[i%imageContainers.length];
-    }
   },
   computed:{
 
@@ -244,7 +224,7 @@ export default {
   }
 
   #app {
-    font-family: Lato,'Lucida Sans Unicode','Lucida Grande',sans-serif;
+    font-family: Lato,Lucida Sans Unicode,Lucida Grande,sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
@@ -268,29 +248,28 @@ export default {
     padding-top: 10px;
     text-align: center;
     cursor: pointer;
+    color: rgb(222, 46, 7);
   }
   .user-navigation-option:hover{
     transition: all .4s ease-in-out;
-    background-color: #2196F5;
+    background-color: rgb(222, 46, 7);
     color:white;
   }
 
   .active-button{
-    background-color: #2196F5;
+    background-color: rgb(222, 46, 7);
     color:white;
   }
 
   .award-information-modal{
-    width:100%;
+    width:calc(100vw - 32px);
     display: flex;
-    background-color: #FF9900;
+    background-color: rgb(222, 46, 7);
+    color: white;
     box-shadow: 0 2px 4px 0 rgba(0,0,0,.4);
     max-height: 80vh;
-  }
-
-  .display-awards{
-    display: grid;
-    grid-template-columns: 33.33% 33.33% 33.33%;
+    position: relative;
+    padding: 16px;
   }
 
   .user-progress-content{
@@ -301,6 +280,7 @@ export default {
 
   .progress-component{
     display: flex;
+    max-height: 15vh;
   }
 
   .progress-component:hover{
@@ -312,18 +292,18 @@ export default {
     bottom: 0;
     left:0;
     padding: 8px 20px 8px 20px;
-    background-color: #4EAD4F;
+    background-color: rgb(222, 46, 7);
     color: white;
   }
   .awards-component{
+    display: flex;
+    max-height: 15vh;
     cursor: pointer;
+    position:relative;
   }
 
   .awards-component:hover{
-    box-shadow: 0 0 4px 0 #EE9E2B;
+    box-shadow: 0 0 4px 0 rgb(222, 46, 7);
   }
-  .awards-component:hover .awards-criteria {
-    overflow: visible;
-    display:block;
-  }
+
 </style>
