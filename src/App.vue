@@ -65,6 +65,8 @@ export default {
       searchItem: '',
       totalPoints: 0,
       totalTime: 0,
+      userId: null,
+      axiosInstance: null,
     }
   },
   components: {
@@ -73,6 +75,32 @@ export default {
     InformationModal,
   },
   methods:{
+    getContext () {
+      let url = null;
+      if (this.isDev) {
+        url = 'http://smithu.app/api'
+      } else {
+        url = 'https://udev.smithbuy.com/api'
+      }
+      this.axiosInstance = axios.create({
+        baseURL: url
+      })
+    },
+    getWhoAmI (cb) {
+      if (this.isDev) {
+        this.userId = 665;
+        if (cb) {
+          cb()
+        }
+      } else {
+        this.d2lInstance.get('/lp/1.9/users/whoami').then(res => {
+          this.userId = res.data.Identifier;
+          if (cb) {
+            cb()
+          }
+        }).catch(() => {})
+      }
+    },
     awardsClick(){
       this.isAwards = true;
       this.isProgress = false;
@@ -122,7 +150,7 @@ export default {
     }
   },
   mounted() {
-    axios.get('http://localhost:8000/api/json')
+    axios.get('http://localhost:8000/api/progress/969')
       .then(
         response => {
           this.list = response.data;
@@ -135,11 +163,7 @@ export default {
             if(this.list[key].is_complete === true){
               this.totalTime += Number(this.list[key].time_spent);
             }
-
-
-
           });
-
 
           let hours = Math.floor(Number(this.totalTime)/3600);
           let minutes = Math.floor((this.totalTime-(3600*hours))/60);
@@ -187,10 +211,6 @@ export default {
        let tempCourse = key;
 
        tempCourse = tempCourse.replace(/\s/g,'').toLowerCase();
-       console.log(tempCourse.includes(searchTemp));
-       console.log(tempCourse);
-
-
 
        if(tempCourse.includes(searchTemp)){
          returnItem[key] = this.list[key];
@@ -198,7 +218,6 @@ export default {
      });
 
      list.push(returnItem);
-     console.log(list.length);
 
      return returnItem;
     }
