@@ -34,7 +34,7 @@
               v-bind:course="key"></progress-component>
 
       <div class="user-progress-stat-box" v-if="isAwards">
-        Total Points: {{totalPoints}}
+        Total Credit: {{totalPoints}}
       </div>
       <div class="user-progress-stat-box" v-if="isProgress">
         Total time: {{totalTime}}
@@ -150,7 +150,8 @@ export default {
     }
   },
   mounted() {
-    axios.get('http://localhost:8000/api/progress/969')
+
+    axios.get('http://localhost:8000/api/progress/967')
       .then(
         response => {
           this.list = response.data;
